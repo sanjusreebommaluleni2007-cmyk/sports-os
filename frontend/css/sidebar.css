@@ -193,6 +193,7 @@ body.match-mode .main-content {
 @media (max-width: 768px) {
     #sidebar {
         transform: translateX(-250px);
+        display: flex !important;
     }
 
     #sidebar.open {
