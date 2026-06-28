@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     desktopBtn.title = 'Toggle Desktop Mode';
     document.body.appendChild(desktopBtn);
 
-    let isDesktop = localStorage.getItem('desktopMode') !== 'false';
+    let isDesktop = localStorage.getItem('desktopMode') === 'true';
 
     function applyDesktopMode(desktop) {
         const meta = document.querySelector('meta[name="viewport"]');
