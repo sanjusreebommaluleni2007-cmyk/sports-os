@@ -7,7 +7,6 @@ const NAV_ITEMS = [
         label: 'Timetable', icon: '🗓️', href: 'timetable.html',
         roles: ['owner', 'head_coach', 'coach', 'athlete']
     },
-
     {
         label: 'Batches & Attendance', icon: '👥', href: 'batches.html',
         roles: ['head_coach', 'coach']
@@ -151,10 +150,6 @@ function renderSidebar() {
         </div>
     `;
 
-    attachSidebarEvents();
-}
-
-function attachSidebarEvents() {
     document.getElementById('logoutBtn')?.addEventListener('click', () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -162,41 +157,79 @@ function attachSidebarEvents() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', renderSidebar);
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile hamburger + desktop toggle
-    const btn = document.createElement('button');
-    btn.className = 'hamburger-btn';
-    btn.innerHTML = '☰';
-    document.body.appendChild(btn);
+    // ── 1. Render sidebar content first ──────────────────────────────────────
+    renderSidebar();
 
+    const sidebarEl = document.getElementById('sidebar');
+    if (!sidebarEl) return; // nothing to do if sidebar doesn't exist on this page
+
+    // ── 2. Create hamburger button ────────────────────────────────────────────
+    const hamburgerBtn = document.createElement('button');
+    hamburgerBtn.className = 'hamburger-btn';
+    hamburgerBtn.innerHTML = '☰';
+    hamburgerBtn.setAttribute('aria-label', 'Open menu');
+    document.body.appendChild(hamburgerBtn);
+
+    // ── 3. Create overlay ─────────────────────────────────────────────────────
     const overlay = document.createElement('div');
     overlay.className = 'sidebar-overlay';
     document.body.appendChild(overlay);
 
-    btn.addEventListener('click', () => {
-        document.getElementById('sidebar').classList.toggle('open');
-        overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
-    });
-
-    overlay.addEventListener('click', () => {
-        document.getElementById('sidebar').classList.remove('open');
-        overlay.style.display = 'none';
-    });
-
-    // Desktop toggle button (bottom right)
+    // ── 4. Create desktop-mode toggle ─────────────────────────────────────────
     const desktopBtn = document.createElement('button');
     desktopBtn.className = 'desktop-toggle-btn';
-    desktopBtn.innerHTML = '🖥️';
-    desktopBtn.title = 'Toggle Desktop Mode';
+    desktopBtn.setAttribute('aria-label', 'Toggle desktop mode');
     document.body.appendChild(desktopBtn);
 
+    // ── 5. Single open/close state ────────────────────────────────────────────
+    let sidebarOpen = false;
+
+    function openSidebar() {
+        sidebarOpen = true;
+        sidebarEl.style.transform = 'translateX(0)';
+        overlay.style.display = 'block';
+        hamburgerBtn.innerHTML = '✕';   // becomes a close button
+        hamburgerBtn.setAttribute('aria-label', 'Close menu');
+    }
+
+    function closeSidebar() {
+        sidebarOpen = false;
+        sidebarEl.style.transform = 'translateX(-250px)';
+        overlay.style.display = 'none';
+        hamburgerBtn.innerHTML = '☰';
+        hamburgerBtn.setAttribute('aria-label', 'Open menu');
+    }
+
+    // ── 6. Hamburger: single listener, toggle open/closed ─────────────────────
+    hamburgerBtn.addEventListener('click', () => {
+        if (sidebarOpen) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    });
+
+    // Tapping the overlay closes the sidebar
+    overlay.addEventListener('click', closeSidebar);
+
+    // Tapping any nav link closes the sidebar (good for SPA-style navigation)
+    sidebarEl.addEventListener('click', (e) => {
+        if (e.target.closest('.nav-link') && window.innerWidth <= 768) {
+            closeSidebar();
+        }
+    });
+
+    // ── 7. Desktop-mode toggle ────────────────────────────────────────────────
     let isDesktop = localStorage.getItem('desktopMode') === 'true';
 
     function applyDesktopMode(desktop) {
-        const meta = document.querySelector('meta[name="viewport"]');
-        if (!meta) return;
+        let meta = document.querySelector('meta[name="viewport"]');
+        if (!meta) {
+            meta = document.createElement('meta');
+            meta.name = 'viewport';
+            document.head.prepend(meta);
+        }
         if (desktop) {
             meta.setAttribute('content', 'width=1024, initial-scale=0.5');
             desktopBtn.innerHTML = '📱';
@@ -208,34 +241,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    applyDesktopMode(isDesktop);
+    desktopBtn.addEventListener('click', () => {
+        isDesktop = !isDesktop;
+        localStorage.setItem('desktopMode', String(isDesktop));
+        applyDesktopMode(isDesktop);
+        forceSidebarLayout(); // re-evaluate layout after viewport change
+    });
+
+    // ── 8. Layout engine: uses innerWidth, never matchMedia ───────────────────
     function forceSidebarLayout() {
-        const width = window.innerWidth;
-        const sidebarEl = document.getElementById('sidebar');
-        if (width <= 768) {
-            sidebarEl.style.transform = 'translateX(-250px)';
-            btn.style.display = 'block';
-            desktopBtn.style.display = 'block';
+        const mobile = window.innerWidth <= 768;
+
+        if (mobile) {
+            hamburgerBtn.style.display = 'flex';
+            desktopBtn.style.display = 'flex';
+            // Only force-close if we're switching from desktop → mobile
+            // Don't stomp on an already-open sidebar
+            if (!sidebarOpen) {
+                sidebarEl.style.transform = 'translateX(-250px)';
+            }
         } else {
-            sidebarEl.style.transform = 'translateX(0)';
-            btn.style.display = 'none';
+            // Desktop: sidebar always visible, buttons hidden
+            hamburgerBtn.style.display = 'none';
             desktopBtn.style.display = 'none';
+            sidebarEl.style.transform = 'translateX(0)';
+            overlay.style.display = 'none';
+            sidebarOpen = false;
         }
     }
 
+    // Apply viewport meta first, then layout
+    applyDesktopMode(isDesktop);
     forceSidebarLayout();
+
     window.addEventListener('resize', forceSidebarLayout);
-
-    btn.addEventListener('click', () => {
-        const sidebarEl = document.getElementById('sidebar');
-        const isOpen = sidebarEl.style.transform === 'translateX(0px)';
-        sidebarEl.style.transform = isOpen ? 'translateX(-250px)' : 'translateX(0px)';
-        overlay.style.display = isOpen ? 'none' : 'block';
-    });
-
-    desktopBtn.addEventListener('click', () => {
-        isDesktop = !isDesktop;
-        localStorage.setItem('desktopMode', isDesktop);
-        applyDesktopMode(isDesktop);
-    });
 });

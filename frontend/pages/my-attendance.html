@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <script src="../js/sidebar.js?v=2"></script>
+    <script src="../js/sidebar.js?v=3"></script>
     <script>
         const records = [
             { date: '17 Jun', day: 'Wednesday', session: 'Net Practice', status: 'present' },
@@ -81,23 +81,17 @@
                 const badgeText = isPresent ? '✓ Present' : '✗ Absent';
                 const dateParts = r.date.split(' ');
 
-                return '<div style="display:flex;align-items:center;justify-content:space-between;' +
-                    'padding:14px 0;border-bottom:1px solid #F3F4F6">' +
-                    '<div style="display:flex;align-items:center;gap:16px">' +
-                    '<div style="text-align:center;min-width:48px">' +
-                    '<div style="font-size:18px;font-weight:700">' + dateParts[0] + '</div>' +
-                    '<div style="font-size:11px;color:#6B7280">' + dateParts[1] + '</div>' +
-                    '</div>' +
-                    '<div>' +
-                    '<div style="font-weight:600">' + r.session + '</div>' +
-                    '<div style="font-size:12px;color:#6B7280">' + r.day + '</div>' +
-                    '</div></div>' +
-                    '<span style="padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700;' +
-                    'background:' + badgeBg + ';color:' + badgeColor + '">' +
-                    badgeText + '</span></div>';
+                return '<div style=" display:flex;align-items:center;justify-content:space-between;'
+                    + 'padding:14px 0;border-bottom:1px solid #F3F4F6">'
+                    + ' < div style = "display:flex;align-items:center;gap:16px" > '
+                    + '<div style="text-align:center;min-width:48px">' + '<div style="font-size:18px;font-weight:700">' +
+                    dateParts[0] + '</div>' + '<div style="font-size:11px;color:#6B7280">' + dateParts[1] + '</div>' + '</div>'
+                    + '<div>' + '<div style="font-weight:600">' + r.session + '</div>'
+                    + '<div style="font-size:12px;color:#6B7280">' + r.day + '</div>' + '</div></div>'
+                    + '<span style="padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700;' + 'background:' + badgeBg
+                    + ';color:' + badgeColor + '">' + badgeText + '</span></div>';
             }).join('');
-        });
-    </script>
+        }); </script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js')
