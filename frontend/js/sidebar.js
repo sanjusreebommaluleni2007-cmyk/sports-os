@@ -209,6 +209,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     applyDesktopMode(isDesktop);
+    function forceSidebarLayout() {
+        const width = window.innerWidth;
+        const sidebarEl = document.getElementById('sidebar');
+        if (width <= 768) {
+            sidebarEl.style.transform = 'translateX(-250px)';
+            btn.style.display = 'block';
+            desktopBtn.style.display = 'block';
+        } else {
+            sidebarEl.style.transform = 'translateX(0)';
+            btn.style.display = 'none';
+            desktopBtn.style.display = 'none';
+        }
+    }
+
+    forceSidebarLayout();
+    window.addEventListener('resize', forceSidebarLayout);
+
+    btn.addEventListener('click', () => {
+        const sidebarEl = document.getElementById('sidebar');
+        const isOpen = sidebarEl.style.transform === 'translateX(0px)';
+        sidebarEl.style.transform = isOpen ? 'translateX(-250px)' : 'translateX(0px)';
+        overlay.style.display = isOpen ? 'none' : 'block';
+    });
 
     desktopBtn.addEventListener('click', () => {
         isDesktop = !isDesktop;
