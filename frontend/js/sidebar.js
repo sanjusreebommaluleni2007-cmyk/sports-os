@@ -163,52 +163,56 @@ function attachSidebarEvents() {
 }
 
 document.addEventListener('DOMContentLoaded', renderSidebar);
-// Mobile hamburger + desktop toggle
-const btn = document.createElement('button');
-btn.className = 'hamburger-btn';
-btn.innerHTML = '☰';
-document.body.appendChild(btn);
 
-const overlay = document.createElement('div');
-overlay.className = 'sidebar-overlay';
-document.body.appendChild(overlay);
+document.addEventListener('DOMContentLoaded', () => {
+    // Mobile hamburger + desktop toggle
+    const btn = document.createElement('button');
+    btn.className = 'hamburger-btn';
+    btn.innerHTML = '☰';
+    document.body.appendChild(btn);
 
-btn.addEventListener('click', () => {
-    document.getElementById('sidebar').classList.toggle('open');
-    overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
-});
+    const overlay = document.createElement('div');
+    overlay.className = 'sidebar-overlay';
+    document.body.appendChild(overlay);
 
-overlay.addEventListener('click', () => {
-    document.getElementById('sidebar').classList.remove('open');
-    overlay.style.display = 'none';
-});
+    btn.addEventListener('click', () => {
+        document.getElementById('sidebar').classList.toggle('open');
+        overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+    });
 
-// Desktop toggle button (bottom right)
-const desktopBtn = document.createElement('button');
-desktopBtn.className = 'desktop-toggle-btn';
-desktopBtn.innerHTML = '🖥️';
-desktopBtn.title = 'Toggle Desktop Mode';
-document.body.appendChild(desktopBtn);
+    overlay.addEventListener('click', () => {
+        document.getElementById('sidebar').classList.remove('open');
+        overlay.style.display = 'none';
+    });
 
-let isDesktop = localStorage.getItem('desktopMode') !== 'false';
+    // Desktop toggle button (bottom right)
+    const desktopBtn = document.createElement('button');
+    desktopBtn.className = 'desktop-toggle-btn';
+    desktopBtn.innerHTML = '🖥️';
+    desktopBtn.title = 'Toggle Desktop Mode';
+    document.body.appendChild(desktopBtn);
 
-function applyDesktopMode(desktop) {
-    const meta = document.querySelector('meta[name="viewport"]');
-    if (desktop) {
-        meta.setAttribute('content', 'width=1024, initial-scale=0.5');
-        desktopBtn.innerHTML = '📱';
-        desktopBtn.title = 'Switch to Mobile Mode';
-    } else {
-        meta.setAttribute('content', 'width=device-width, initial-scale=1.0');
-        desktopBtn.innerHTML = '🖥️';
-        desktopBtn.title = 'Switch to Desktop Mode';
+    let isDesktop = localStorage.getItem('desktopMode') !== 'false';
+
+    function applyDesktopMode(desktop) {
+        const meta = document.querySelector('meta[name="viewport"]');
+        if (!meta) return;
+        if (desktop) {
+            meta.setAttribute('content', 'width=1024, initial-scale=0.5');
+            desktopBtn.innerHTML = '📱';
+            desktopBtn.title = 'Switch to Mobile Mode';
+        } else {
+            meta.setAttribute('content', 'width=device-width, initial-scale=1.0');
+            desktopBtn.innerHTML = '🖥️';
+            desktopBtn.title = 'Switch to Desktop Mode';
+        }
     }
-}
 
-applyDesktopMode(isDesktop);
-
-desktopBtn.addEventListener('click', () => {
-    isDesktop = !isDesktop;
-    localStorage.setItem('desktopMode', isDesktop);
     applyDesktopMode(isDesktop);
+
+    desktopBtn.addEventListener('click', () => {
+        isDesktop = !isDesktop;
+        localStorage.setItem('desktopMode', isDesktop);
+        applyDesktopMode(isDesktop);
+    });
 });
