@@ -179,11 +179,47 @@ body.match-mode .main-content {
 
 @media (max-width: 768px) {
     #sidebar {
-        display: none;
+        transform: translateX(-250px);
+        transition: transform 0.3s ease;
+    }
+
+    #sidebar.open {
+        transform: translateX(0);
     }
 
     .main-content {
         margin-left: 0 !important;
         padding: 16px !important;
     }
+
+    .hamburger-btn {
+        display: block !important;
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 200;
+        background: #F5C518;
+        border: none;
+        border-radius: 8px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .sidebar-overlay {
+        display: block !important;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 99;
+    }
+}
+
+.hamburger-btn {
+    display: none;
+}
+
+.sidebar-overlay {
+    display: none;
 }

@@ -163,3 +163,22 @@ function attachSidebarEvents() {
 }
 
 document.addEventListener('DOMContentLoaded', renderSidebar);
+// Mobile hamburger
+const btn = document.createElement('button');
+btn.className = 'hamburger-btn';
+btn.innerHTML = '☰';
+document.body.appendChild(btn);
+
+const overlay = document.createElement('div');
+overlay.className = 'sidebar-overlay';
+document.body.appendChild(overlay);
+
+btn.addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+    overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+});
+
+overlay.addEventListener('click', () => {
+    document.getElementById('sidebar').classList.remove('open');
+    overlay.style.display = 'none';
+});
