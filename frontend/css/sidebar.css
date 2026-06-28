@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    transition: transform 0.3s ease;
 }
 
 .sidebar-header {
@@ -177,10 +178,17 @@ body.match-mode .main-content {
     margin-left: 0;
 }
 
+.hamburger-btn {
+    display: none;
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
 @media (max-width: 768px) {
     #sidebar {
         transform: translateX(-250px);
-        transition: transform 0.3s ease;
     }
 
     #sidebar.open {
@@ -189,14 +197,14 @@ body.match-mode .main-content {
 
     .main-content {
         margin-left: 0 !important;
-        padding: 16px !important;
+        padding: 60px 16px 16px 16px !important;
     }
 
     .hamburger-btn {
         display: block !important;
         position: fixed;
-        top: 16px;
-        left: 16px;
+        top: 12px;
+        right: 16px;
         z-index: 200;
         background: #F5C518;
         border: none;
@@ -208,18 +216,10 @@ body.match-mode .main-content {
     }
 
     .sidebar-overlay {
-        display: block !important;
+        display: none;
         position: fixed;
         inset: 0;
         background: rgba(0, 0, 0, 0.5);
         z-index: 99;
     }
-}
-
-.hamburger-btn {
-    display: none;
-}
-
-.sidebar-overlay {
-    display: none;
 }
