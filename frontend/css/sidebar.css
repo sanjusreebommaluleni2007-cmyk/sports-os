@@ -179,16 +179,11 @@ body.match-mode .main-content {
 
 @media (max-width: 768px) {
     #sidebar {
-        transform: translateX(-250px);
-        transition: transform 0.3s ease;
-    }
-
-    #sidebar.open {
-        transform: translateX(0);
+        display: none;
     }
 
     .main-content {
-        margin-left: 0;
-        padding: 20px 16px;
+        margin-left: 0 !important;
+        padding: 16px !important;
     }
 }
