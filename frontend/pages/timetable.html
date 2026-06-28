@@ -18,6 +18,19 @@
 
 <body>
     <div id="sidebar"></div>
+    <button id="forceHamburger"
+        style="position:fixed;top:12px;right:16px;z-index:9999;background:#F5C518;border:none;border-radius:8px;width:44px;height:44px;font-size:22px;">☰</button>
+    <script>
+        document.getElementById('forceHamburger').addEventListener('click', function () {
+            var sb = document.getElementById('sidebar');
+            if (sb.style.transform === 'translateX(0px)' || sb.style.transform === '') {
+                sb.style.transform = 'translateX(-250px)';
+            } else {
+                sb.style.transform = 'translateX(0px)';
+            }
+        });
+        document.getElementById('sidebar').style.transform = 'translateX(-250px)';
+    </script>
 
     <div class="main-content">
         <header class="page-header">
