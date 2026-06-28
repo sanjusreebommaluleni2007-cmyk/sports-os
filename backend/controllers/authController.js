@@ -230,7 +230,8 @@ exports.googleCallback = async (req, res) => {
             sport,
         });
 
-        res.redirect(`/pages/login.html?googleAuth=${encodeURIComponent(params.toString())}`);
+        // Redirect to custom scheme so Android app catches it
+        res.redirect(`sportsos://login?googleAuth=${encodeURIComponent(params.toString())}`);
     } catch (err) {
         res.redirect('/pages/login.html?error=google_failed');
     }
