@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports OS - Manage Roster</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <style>
+        .roster-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .tab-btn {
+            padding: 8px 24px;
+            border-radius: 8px;
+            border: 1.5px solid var(--color-border);
+            background: var(--color-white);
+            color: var(--color-muted);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all .15s;
+        }
+
+        .tab-btn.active {
+            background: var(--color-accent);
+            color: var(--color-dark);
+            border-color: var(--color-accent);
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        .roster-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .roster-toolbar input {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1.5px solid var(--color-border);
+            font-size: 14px;
+            width: 240px;
+            outline: none;
+        }
+
+        .roster-toolbar input:focus {
+            border-color: var(--color-accent);
+        }
+
+        .roster-table-wrap {
+            background: var(--color-white);
+            border-radius: 12px;
+            border: 1.5px solid var(--color-border);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--color-bg);
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-muted);
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            border-bottom: 1.5px solid var(--color-border);
+        }
+
+        td {
+            padding: 13px 16px;
+            font-size: 14px;
+            color: var(--color-dark);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: #fafafa;
+        }
+
+        .avatar-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar-sm {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--color-dark);
+            color: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .role-pill {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .role-pill.head_coach {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .role-pill.coach {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .role-pill.athlete {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-icon {
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1.5px solid var(--color-border);
+            background: var(--color-white);
+            cursor: pointer;
+            font-size: 13px;
+            transition: all .15s;
+        }
+
+        .btn-icon:hover {
+            border-color: var(--color-accent);
+        }
+
+        .btn-icon.danger:hover {
+            border-color: var(--color-danger);
+            background: #FEF2F2;
+        }
+
+        .empty-state {
+            padding: 48px;
+            text-align: center;
+            color: var(--color-muted);
+            font-size: 14px;
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .45);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--color-white);
+            border-radius: 16px;
+            padding: 32px;
+            width: 480px;
+            max-width: 95vw;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .2);
+        }
+
+        .modal h2 {
+            font-size: 20px;
+            margin: 0 0 24px;
+        }
+
+        .form-row {
+            margin-bottom: 16px;
+        }
+
+        .form-row label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--color-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .form-row input,
+        .form-row select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1.5px solid var(--color-border);
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .form-row input:focus,
+        .form-row select:focus {
+            border-color: var(--color-accent);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .btn-cancel {
+            padding: 9px 20px;
+            border-radius: 8px;
+            border: 1.5px solid var(--color-border);
+            background: var(--color-white);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-save {
+            padding: 9px 24px;
+            border-radius: 8px;
+            border: none;
+            background: var(--color-accent);
+            color: var(--color-dark);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-save:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            z-index: 200;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: all .25s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.success {
+            background: var(--color-success);
+        }
+
+        .toast.error {
+            background: var(--color-danger);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sidebar"></div>
+
+    <div class="main-content">
+        <header class="page-header">
+            <div>
+                <p class="page-meta">ROSTER MANAGEMENT</p>
+                <h1 class="page-title">Manage Roster</h1>
+                <p class="page-subtitle">Add, edit and remove athletes and coaches for your academy.</p>
+            </div>
+        </header>
+
+        <div class="roster-tabs">
+            <button class="tab-btn active" data-tab="athletes">🏃 Athletes</button>
+            <button class="tab-btn" data-tab="coaches">🧑‍🏫 Coaches</button>
+        </div>
+
+        <!-- Athletes Tab -->
+        <div class="tab-panel active" id="tab-athletes">
+            <div class="roster-toolbar">
+                <input type="text" id="athleteSearch" placeholder="Search athletes…">
+                <button class="btn-primary" id="addAthleteBtn">+ Add Athlete</button>
+            </div>
+            <div class="roster-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Specialization</th>
+                            <th>Phone</th>
+                            <th>Batch</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="athleteTableBody">
+                        <tr>
+                            <td colspan="6" class="empty-state">Loading…</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Coaches Tab -->
+        <div class="tab-panel" id="tab-coaches">
+            <div class="roster-toolbar">
+                <input type="text" id="coachSearch" placeholder="Search coaches…">
+                <button class="btn-primary" id="addCoachBtn">+ Add Coach</button>
+            </div>
+            <div class="roster-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Specialization</th>
+                            <th>Phone</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="coachTableBody">
+                        <tr>
+                            <td colspan="6" class="empty-state">Loading…</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Athlete Modal -->
+    <div class="modal-backdrop" id="athleteModal">
+        <div class="modal">
+            <h2 id="athleteModalTitle">Add Athlete</h2>
+            <div class="form-grid">
+                <div class="form-row">
+                    <label>Full Name *</label>
+                    <input type="text" id="a_name" placeholder="Ravi Kumar">
+                </div>
+                <div class="form-row">
+                    <label>Email *</label>
+                    <input type="email" id="a_email" placeholder="ravi@example.com">
+                </div>
+                <div class="form-row">
+                    <label>Password *</label>
+                    <input type="password" id="a_password" placeholder="Min 6 characters">
+                </div>
+                <div class="form-row">
+                    <label>Phone</label>
+                    <input type="text" id="a_phone" placeholder="9876543210">
+                </div>
+                <div class="form-row">
+                    <label>Specialization</label>
+                    <input type="text" id="a_specialization" placeholder="Raider / Batsman / etc.">
+                </div>
+                <div class="form-row">
+                    <label>Date of Birth</label>
+                    <input type="date" id="a_dob">
+                </div>
+            </div>
+            <div class="form-row">
+                <label>Batch Assigned (optional)</label>
+                <input type="text" id="a_batch" placeholder="e.g. U-16 Batch A">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" id="athleteModalCancel">Cancel</button>
+                <button class="btn-save" id="athleteModalSave">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Coach Modal -->
+    <div class="modal-backdrop" id="coachModal">
+        <div class="modal">
+            <h2 id="coachModalTitle">Add Coach</h2>
+            <div class="form-grid">
+                <div class="form-row">
+                    <label>Full Name *</label>
+                    <input type="text" id="c_name" placeholder="Anil Kumble">
+                </div>
+                <div class="form-row">
+                    <label>Email *</label>
+                    <input type="email" id="c_email" placeholder="anil@example.com">
+                </div>
+                <div class="form-row">
+                    <label>Password *</label>
+                    <input type="password" id="c_password" placeholder="Min 6 characters">
+                </div>
+                <div class="form-row">
+                    <label>Role *</label>
+                    <select id="c_role">
+                        <option value="coach">Coach</option>
+                        <option value="head_coach">Head Coach</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label>Specialization</label>
+                    <input type="text" id="c_specialization" placeholder="Bowling / Defending / etc.">
+                </div>
+                <div class="form-row">
+                    <label>Phone</label>
+                    <input type="text" id="c_phone" placeholder="9876543210">
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" id="coachModalCancel">Cancel</button>
+                <button class="btn-save" id="coachModalSave">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="../js/sidebar.js?v=2"></script>
+    <script src="../js/roster.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW failed:', err));
+        }
+    </script>
+</body>
+
+</html>

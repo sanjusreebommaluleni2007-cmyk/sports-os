@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports OS - Batches & Attendance</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/batches.css">
+</head>
+
+<body>
+    <div id="sidebar"></div>
+
+    <div class="main-content">
+        <header class="page-header">
+            <div>
+                <p class="page-meta" id="pageDate">MONDAY · 15 JUNE</p>
+                <h1 class="page-title">Batches & Attendance</h1>
+                <p class="page-subtitle" id="pageSubtitle">Pick a batch, capture attendance in seconds.</p>
+            </div>
+            <div class="page-context">Field Mode · Tablet ready</div>
+        </header>
+
+        <!-- Owner-only: Coach Attendance panel -->
+        <section id="coachAttendanceCard" class="card coach-attendance-card" style="display:none;">
+            <div class="athlete-header">
+                <div class="athlete-title">
+                    <span class="athlete-icon">🧑‍🏫</span>
+                    <span>Coach Attendance — Today</span>
+                </div>
+                <div class="field-group coach-att-date-group">
+                    <input type="date" id="coachAttendanceDate" class="batch-select">
+                </div>
+            </div>
+
+            <div class="status-badges coach-att-badges">
+                <div class="status-badge status-present">
+                    <span class="badge-label">✅ PRESENT</span>
+                    <span class="badge-value" id="coachPresentCount">0</span>
+                </div>
+                <div class="status-badge status-absent">
+                    <span class="badge-label">❌ ABSENT</span>
+                    <span class="badge-value" id="coachAbsentCount">0</span>
+                </div>
+                <div class="status-badge status-pending">
+                    <span class="badge-label">🕐 LATE</span>
+                    <span class="badge-value" id="coachLateCount">0</span>
+                </div>
+            </div>
+
+            <div id="coachAttendanceList" class="athlete-list"></div>
+
+            <button id="saveCoachAttendanceBtn" class="btn-save">💾 Save Coach Attendance</button>
+
+            <div class="coach-att-history">
+                <p class="coach-att-history-label">Last 7 Days</p>
+                <div id="coachAttendanceHistoryList" class="history-list">
+                    <p style="color:#6B7280;">Loading history...</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card batch-selector-card">
+            <span class="card-label">TRAINING BATCH</span>
+
+            <!-- Coach view: simple dropdown (their own batches only) -->
+            <div id="simpleBatchPicker" class="batch-selector-row" style="display:none;">
+                <div class="field-group">
+                    <select id="batchSelect">
+                        <option value="">Loading batches...</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label class="field-label" for="attendanceDate">Session Date</label>
+                    <input type="date" id="attendanceDate" class="batch-select">
+                </div>
+                <div class="status-badges">
+                    <div class="status-badge status-present">
+                        <span class="badge-label">✅ PRESENT</span>
+                        <span class="badge-value" id="presentCount">0</span>
+                    </div>
+                    <div class="status-badge status-absent">
+                        <span class="badge-label">❌ ABSENT</span>
+                        <span class="badge-value" id="absentCount">0</span>
+                    </div>
+                    <div class="status-badge status-pending">
+                        <span class="badge-label">🕐 LATE</span>
+                        <span class="badge-value" id="pendingCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Head Coach / Owner view: batches grouped by coach -->
+            <div id="groupedBatchPicker" style="display:none;">
+                <div class="academy-banner">★ Academy-Wide View — all coaches' batches</div>
+                <div id="coachGroups" class="coach-groups"></div>
+
+                <div class="batch-selector-row grouped-meta-row">
+                    <div class="field-group">
+                        <label class="field-label" for="attendanceDateGrouped">Session Date</label>
+                        <input type="date" id="attendanceDateGrouped" class="batch-select">
+                    </div>
+                    <div class="status-badges">
+                        <div class="status-badge status-present">
+                            <span class="badge-label">✅ PRESENT</span>
+                            <span class="badge-value" id="presentCountGrouped">0</span>
+                        </div>
+                        <div class="status-badge status-absent">
+                            <span class="badge-label">❌ ABSENT</span>
+                            <span class="badge-value" id="absentCountGrouped">0</span>
+                        </div>
+                        <div class="status-badge status-pending">
+                            <span class="badge-label">🕐 LATE</span>
+                            <span class="badge-value" id="pendingCountGrouped">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card athlete-card">
+            <div class="athlete-header">
+                <div class="athlete-title">
+                    <span class="athlete-icon">👥</span>
+                    <span id="selectedBatchLabel">U-16 Elite · 6 athletes</span>
+                </div>
+            </div>
+
+            <div id="athleteList" class="athlete-list"></div>
+
+            <button id="saveAttendanceBtn" class="btn-save">💾 Save Attendance for Today</button>
+            <div id="toastContainer" class="toast-container"></div>
+        </section>
+        <section class="card history-card">
+            <div class="athlete-header">
+                <div class="athlete-title">
+                    <span class="athlete-icon">📅</span>
+                    <span>Recent Attendance — Last 7 Days</span>
+                </div>
+            </div>
+            <div id="attendanceHistoryList" class="history-list">
+                <p style="color:#6B7280;">Select a batch to view history.</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/batches.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW failed:', err));
+        }
+    </script>
+</body>
+
+</html>

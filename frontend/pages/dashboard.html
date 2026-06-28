@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports OS - Dashboard</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+    <div id="sidebar"></div>
+
+    <div class="main-content">
+        <header class="page-header">
+            <div>
+                <p class="page-meta" id="pageDate">MONDAY · 15 JUNE</p>
+                <h1 class="page-title">Good morning, <span id="greetingName">Coach</span>.</h1>
+                <p class="page-subtitle">Here is what is happening at the academy today.</p>
+            </div>
+            <div class="page-context">Field Mode · Tablet ready</div>
+        </header>
+        <div class="split-grid" id="athleteTopRow" style="display:none;">
+            <section class="left-column">
+                <article class="card athlete-profile-card">
+                    <div class="card-header">
+                        <div style="display:flex;align-items:center;gap:14px;">
+                            <div id="athleteAvatar"
+                                style="width:56px;height:56px;border-radius:50%;background:var(--color-accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:var(--color-dark);">
+                                ??</div>
+                            <div>
+                                <h3 id="athleteProfileName" style="margin:0;">—</h3>
+                                <p class="card-subtext" id="athleteProfileMeta">—</p>
+                            </div>
+                        </div>
+                        <a href="my-profile.html" class="text-link">Edit →</a>
+                    </div>
+                </article>
+
+                <article class="card athlete-perf-card">
+                    <div class="card-header">
+                        <h3>📊 My Performance</h3>
+                        <a href="performance.html" class="text-link">Details →</a>
+                    </div>
+                    <div class="stats-grid" id="athletePerfStatsEl">
+                        <!-- injected by JS -->
+                    </div>
+                </article>
+
+                <article class="card athlete-quote-card" style="background:var(--color-dark);color:var(--color-white);">
+                    <p id="motivationQuote" style="font-size:15px;font-style:italic;margin:0;">"Loading inspiration…"
+                    </p>
+                </article>
+            </section>
+
+            <aside class="right-column">
+                <article class="card athlete-streak-card">
+                    <div class="card-header">
+                        <h3>🔥 Streak</h3>
+                    </div>
+                    <p id="streakValue" style="font-size:36px;font-weight:800;margin:0;">0 days</p>
+                    <p class="card-subtext" id="streakSub">Log in daily to build your streak.</p>
+                </article>
+
+                <article class="card athlete-todo-card">
+                    <div class="card-header">
+                        <h3>✅ Today's To-Dos</h3>
+                    </div>
+                    <div id="athleteTodoList">
+                        <!-- injected by JS -->
+                    </div>
+                </article>
+            </aside>
+        </div>
+        <div class="split-grid">
+            <section class="left-column">
+                <article class="card next-match-card">
+                    <div class="card-label" id="nextMatchLabel">NEXT MATCH</div>
+                    <h2 id="nextMatchTitle">U-16 Elite vs Mumbai Colts</h2>
+                    <div class="match-meta">
+                        <span id="nextMatchTime">🕐 Sat, 10:30 AM</span>
+                        <span id="nextMatchLocation">📍 Wankhede Practice Ground</span>
+                    </div>
+                    <div class="tag-row" id="nextMatchTags">
+                        <span class="pill">T20 · League</span>
+                        <span class="pill">Squad: 14</span>
+                        <span class="pill green-pill">5 days out</span>
+                    </div>
+                    <div class="btn-row">
+                        <button class="btn-primary" id="enterMatchModeBtn">+ Enter Match Mode</button>
+                        <button class="btn-secondary" id="viewSquadBtn">View Squad →</button>
+                    </div>
+                </article>
+
+                <article class="card practice-net-card">
+                    <div class="card-header">
+                        <div>
+                            <h3 id="practiceCardTitle">Active Practice Nets</h3>
+                            <p class="card-subtext">Live allocation · refreshed 2m ago</p>
+                        </div>
+                        <a href="sessions.html" class="text-link">Manage →</a>
+                    </div>
+
+                    <div class="practice-list" id="practiceList">
+                        <!-- rows injected by JS based on sport -->
+                    </div>
+                </article>
+            </section>
+
+            <aside class="right-column">
+                <article class="card workload-card">
+                    <div class="card-label" id="workloadLabel">FAST BOWLER WORKLOAD</div>
+                    <div class="workload-header">
+                        <h3 id="workloadTitle">Alerts</h3>
+                        <span class="badge red" id="workloadBadge">1 CRITICAL</span>
+                    </div>
+                    <div id="workloadAlerts">
+                        <!-- rows injected by JS based on sport -->
+                    </div>
+                </article>
+                <article class="card attendance-summary-card">
+                    <div class="card-header">
+                        <div>
+                            <h3 id="attendanceSummaryTitle">📋 Today's Attendance</h3>
+                            <p class="card-subtext" id="attendanceSummarySub">Loading…</p>
+                        </div>
+                    </div>
+                    <div class="stats-grid" id="attendanceSummaryStats">
+                        <!-- injected by JS -->
+                    </div>
+                </article>
+                <article class="card equipment-card">
+                    <div class="card-header">
+                        <div>
+                            <h3 id="equipmentTitle">⚙️ Equipment Snapshot</h3>
+                        </div>
+                        <a href="resources.html" class="text-link">Inventory →</a>
+                    </div>
+
+                    <div class="stats-grid" id="equipmentStats">
+                        <!-- stat boxes injected by JS based on sport -->
+                    </div>
+                </article>
+            </aside>
+        </div>
+    </div>
+
+    <script src="../js/sidebar.js?v=2"></script>
+    <script src="../js/dashboard.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW failed:', err));
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,474 @@
+.main-content {
+    margin-left: 250px;
+    padding: 36px 40px;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.page-meta {
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-dark);
+}
+
+.page-subtitle {
+    margin: 12px 0 0;
+    color: var(--color-muted);
+    font-size: 15px;
+    max-width: 560px;
+}
+
+.page-context {
+    color: #9CA3AF;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.card {
+    background: var(--color-white);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid #E5E7EB;
+}
+
+.batch-selector-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 18px;
+    align-items: center;
+}
+
+/* ── Head Coach / Owner: grouped batch picker ─────────────────── */
+
+.academy-banner {
+    color: #F5C518;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 18px;
+}
+
+.coach-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.coach-group-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin: 0 0 10px;
+}
+
+.coach-group-batches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.batch-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1.5px solid #D1D5DB;
+    background: white;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-dark);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.batch-pill:hover {
+    border-color: #F5C518;
+}
+
+.batch-pill.active {
+    background: #111827;
+    border-color: #111827;
+    color: white;
+}
+
+.batch-pill-count {
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.7;
+}
+
+.grouped-meta-row {
+    grid-template-columns: 1fr auto;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 18px;
+}
+
+.batch-select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    font-size: 15px;
+    background: var(--color-white);
+    color: var(--color-dark);
+}
+
+.status-badges {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.status-badge {
+    min-width: 80px;
+    border-radius: 8px;
+    border: 1.5px solid;
+    padding: 10px 18px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.status-present {
+    border-color: #16A34A;
+    color: #16A34A;
+}
+
+.status-absent {
+    border-color: #DC2626;
+    color: #DC2626;
+}
+
+.status-pending {
+    border-color: #D1D5DB;
+    color: #6B7280;
+}
+
+.badge-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.badge-value {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.athlete-card {
+    margin-top: 20px;
+}
+
+.athlete-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.athlete-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.athlete-icon {
+    font-size: 20px;
+}
+
+.athlete-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.athlete-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid #E5E7EB;
+    gap: 16px;
+}
+
+.athlete-row.present {
+    border-left: 4px solid #16A34A;
+}
+
+.athlete-row.absent {
+    border-left: 4px solid #DC2626;
+}
+
+.athlete-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.athlete-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #E5E7EB;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-dark);
+    flex-shrink: 0;
+}
+
+.athlete-details {
+    min-width: 0;
+}
+
+.athlete-name {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.athlete-role {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--color-muted);
+}
+
+.athlete-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.status-button {
+    padding: 8px 20px;
+    border-radius: 6px;
+    border: 1.5px solid;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    background: var(--color-white);
+    transition: all 0.2s ease;
+}
+
+.status-button.present {
+    color: #16A34A;
+    border-color: #16A34A;
+}
+
+.status-button.present.active {
+    background: #16A34A;
+    color: white;
+}
+
+.status-button.absent {
+    color: #DC2626;
+    border-color: #DC2626;
+}
+
+.status-button.absent.active {
+    background: #DC2626;
+    color: white;
+}
+
+.status-button.late {
+    color: #D97706;
+    border-color: #D97706;
+}
+
+.status-button.late.active {
+    background: #D97706;
+    color: white;
+}
+
+.athlete-row.late {
+    border-left: 4px solid #D97706;
+}
+
+.coach-attendance-card {
+    border-left: 4px solid #F5C518;
+}
+
+.coach-att-date-group {
+    margin-left: auto;
+}
+
+.coach-att-date-group input {
+    width: auto;
+    min-width: 160px;
+}
+
+.coach-att-badges {
+    margin-bottom: 18px;
+}
+
+.coach-att-history {
+    margin-top: 24px;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 18px;
+}
+
+.coach-att-history-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin: 0 0 10px;
+}
+
+.btn-save {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #111827;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-save:hover {
+    background-color: #0f172a;
+}
+
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1100;
+}
+
+.toast {
+    padding: 14px 18px;
+    border-radius: 12px;
+    color: white;
+    font-size: 14px;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+}
+
+.toast.success {
+    background: #16A34A;
+}
+
+.toast.error {
+    background: #DC2626;
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        margin-left: 0;
+        padding: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .batch-selector-row {
+        grid-template-columns: 1fr;
+    }
+
+    .status-badges {
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .athlete-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .athlete-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+.history-card {
+    margin-top: 20px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.history-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.history-row:last-child {
+    border-bottom: none;
+}
+
+.history-date {
+    font-weight: 600;
+    color: var(--color-dark);
+    font-size: 14px;
+    min-width: 110px;
+}
+
+.history-counts {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+}
+
+.history-count-present {
+    color: #16A34A;
+    font-weight: 600;
+}
+
+.history-count-absent {
+    color: #DC2626;
+    font-weight: 600;
+}
+
+.history-count-late {
+    color: #6B7280;
+    font-weight: 600;
+}

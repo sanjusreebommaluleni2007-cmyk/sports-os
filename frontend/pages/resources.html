@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports OS - Resource Management</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/resources.css">
+</head>
+
+<body>
+    <div id="sidebar"></div>
+
+    <div class="main-content">
+        <header class="page-header">
+            <div>
+                <p class="page-meta" id="pageDate">TUESDAY · 16 JUNE</p>
+                <h1 class="page-title">Resource Management</h1>
+                <p class="page-subtitle">Facilities, equipment and academy resources — all in one place.</p>
+            </div>
+            <div class="page-context">Field Mode · Tablet ready</div>
+        </header>
+
+        <div class="resources-grid">
+            <div class="left-column">
+                <section class="facility-card">
+                    <div class="section-header">
+                        <div>
+                            <h2>📍 Facility Allocation</h2>
+                        </div>
+                        <div class="section-meta">Today</div>
+                    </div>
+                    <!-- Filled dynamically by JS based on sport -->
+                    <div class="facility-grid" id="facilityGrid"></div>
+                </section>
+
+                <section class="equipment-card-section">
+                    <div class="section-header">
+                        <div>
+                            <h2>🎒 Equipment Inventory</h2>
+                        </div>
+                        <div class="section-meta">Tap +/- to adjust stock</div>
+                    </div>
+                    <div class="equipment-grid" id="equipmentGrid"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/sidebar.js?v=2"></script>
+    <script src="../js/resources.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW failed:', err));
+        }
+    </script>
+</body>
+
+</html>

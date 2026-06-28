@@ -1,0 +1,398 @@
+.main-content {
+    margin-left: 250px;
+    padding: 36px 40px;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.page-meta {
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-dark);
+}
+
+.page-subtitle {
+    margin: 12px 0 0;
+    color: var(--color-muted);
+    font-size: 15px;
+    max-width: 560px;
+}
+
+.page-context {
+    color: #9CA3AF;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.card {
+    background: var(--color-white);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid #E5E7EB;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+/* ── Toolbar: view toggle + add slot ─────────────────────────── */
+
+.timetable-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.view-toggle {
+    display: flex;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.view-toggle-btn {
+    border: none;
+    background: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6B7280;
+    cursor: pointer;
+}
+
+.view-toggle-btn.active {
+    background: #111827;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #111827;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1.5px solid #D1D5DB;
+    background: white;
+    color: #374151;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-secondary:hover {
+    background: #F3F4F6;
+}
+
+/* ── Add / Edit slot form ─────────────────────────────────────── */
+
+.slot-form {
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+}
+
+.slot-form h3 {
+    margin: 0 0 16px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.slot-form-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.slot-form-notes {
+    grid-column: span 2;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #6B7280;
+    text-transform: uppercase;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #D1D5DB;
+    font-size: 14px;
+    font-family: inherit;
+    background: white;
+}
+
+.slot-form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* ── Today view ───────────────────────────────────────────────── */
+
+.today-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.slot-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 12px;
+    background: #F9FAFB;
+    border-left: 4px solid #F5C518;
+}
+
+.slot-time {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-dark);
+    white-space: nowrap;
+    min-width: 110px;
+}
+
+.slot-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.slot-activity {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.slot-meta {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--color-muted);
+}
+
+.slot-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.slot-edit-btn,
+.slot-delete-btn {
+    border: 1.5px solid #E5E7EB;
+    background: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #374151;
+}
+
+.slot-edit-btn:hover {
+    background: #F3F4F6;
+}
+
+.slot-delete-btn {
+    color: #DC2626;
+    border-color: #FCA5A5;
+}
+
+.slot-delete-btn:hover {
+    background: #FEE2E2;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: var(--color-muted);
+    font-size: 14px;
+}
+
+/* ── Week view ────────────────────────────────────────────────── */
+
+.week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+}
+
+.week-day-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.week-day-header {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #E5E7EB;
+}
+
+.week-day-header.is-today {
+    color: #111827;
+    border-bottom-color: #F5C518;
+}
+
+.week-slot-card {
+    background: #F9FAFB;
+    border-left: 3px solid #F5C518;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+}
+
+.week-slot-time {
+    font-weight: 700;
+    color: var(--color-dark);
+    margin: 0 0 4px;
+}
+
+.week-slot-activity {
+    font-weight: 600;
+    color: var(--color-dark);
+    margin: 0 0 2px;
+}
+
+.week-slot-meta {
+    color: var(--color-muted);
+    margin: 0;
+    font-size: 11px;
+}
+
+.week-slot-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.week-slot-actions button {
+    border: none;
+    background: none;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+}
+
+.week-slot-edit {
+    color: #2563EB;
+}
+
+.week-slot-delete {
+    color: #DC2626;
+}
+
+.week-day-empty {
+    color: #D1D5DB;
+    font-size: 11px;
+    text-align: center;
+    padding: 12px 0;
+}
+
+@media (max-width: 1100px) {
+    .main-content {
+        margin-left: 0;
+        padding: 24px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .slot-form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .slot-form-notes {
+        grid-column: span 2;
+    }
+
+    .week-grid {
+        grid-template-columns: repeat(4, 1fr);
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .timetable-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .slot-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .slot-form-notes {
+        grid-column: span 1;
+    }
+
+    .week-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .slot-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports OS - Fee Collection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/fees.css">
+</head>
+
+<body>
+    <div id="sidebar"></div>
+
+    <div class="main-content">
+        <header class="page-header">
+            <div>
+                <p class="page-meta" id="pageDate">SATURDAY · 20 JUNE</p>
+                <h1 class="page-title">Fee Collection</h1>
+                <p class="page-subtitle">Track dues, log payments, and keep records up to date.</p>
+            </div>
+            <div class="page-context">Field Mode · Tablet ready</div>
+        </header>
+
+        <!-- Month selector + 6-month trend -->
+        <div class="card fee-overview-card">
+            <div class="fee-overview-top">
+                <div class="form-group month-select-group">
+                    <label class="filter-label">VIEWING MONTH</label>
+                    <select id="feeMonthSelect" class="form-control"></select>
+                </div>
+                <div class="fee-trend-wrap">
+                    <label class="filter-label">LAST 6 MONTHS</label>
+                    <div id="feeTrendBar" class="fee-trend-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary stats + pie chart side by side -->
+        <div class="fee-stats-grid">
+            <div class="card">
+                <div class="fee-summary-strip">
+                    <div class="summary-box">
+                        <p class="summary-label">TOTAL COLLECTED</p>
+                        <p class="summary-value" id="summaryCollected">₹0</p>
+                    </div>
+                    <div class="summary-box">
+                        <p class="summary-label">PAID</p>
+                        <p class="summary-value paid-text" id="summaryPaidCount">0</p>
+                    </div>
+                    <div class="summary-box">
+                        <p class="summary-label">PARTIAL</p>
+                        <p class="summary-value partial-text" id="summaryPartialCount">0</p>
+                    </div>
+                    <div class="summary-box">
+                        <p class="summary-label">LATE</p>
+                        <p class="summary-value late-text" id="summaryLateCount">0</p>
+                    </div>
+                    <div class="summary-box">
+                        <p class="summary-label">TOTAL DUE</p>
+                        <p class="summary-value" id="summaryTotalDue">₹0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fee-pie-card">
+                <div class="fee-pie-header">
+                    <h3>Paid vs Late</h3>
+                    <div class="pie-toggle">
+                        <button class="pie-toggle-btn active" data-mode="count">Count</button>
+                        <button class="pie-toggle-btn" data-mode="amount">Amount</button>
+                    </div>
+                </div>
+                <div class="fee-pie-body">
+                    <svg id="feePieChart" viewBox="0 0 120 120" class="pie-svg"></svg>
+                    <div class="pie-legend">
+                        <div class="legend-item"><span class="legend-dot paid"></span> Paid <span
+                                id="pieLegendPaid">0</span></div>
+                        <div class="legend-item"><span class="legend-dot partial"></span> Partial <span
+                                id="pieLegendPartial">0</span></div>
+                        <div class="legend-item"><span class="legend-dot late"></span> Late <span
+                                id="pieLegendLate">0</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fee records table -->
+        <div class="card fee-summary-card">
+            <div class="fee-header-row">
+                <h2>💰 Fee Records — <span id="recordsMonthLabel">This Month</span></h2>
+                <button id="toggleAddFeeBtn" class="btn-primary">+ Add Fee Record</button>
+            </div>
+
+            <form id="addFeeForm" class="fee-form" style="display:none;">
+                <div class="fee-form-grid">
+                    <div class="form-group">
+                        <label class="filter-label">ATHLETE</label>
+                        <select id="feeAthleteSelect" class="form-control" required>
+                            <option value="">Select athlete</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="filter-label">FEE MONTH</label>
+                        <input type="text" id="feeMonthInput" class="form-control" placeholder="e.g. June 2026"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="filter-label">AMOUNT (₹)</label>
+                        <input type="number" id="feeAmountInput" class="form-control" min="0" step="1"
+                            placeholder="e.g. 5000" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="filter-label">DUE DATE</label>
+                        <input type="date" id="feeDueDateInput" class="form-control" required>
+                    </div>
+                </div>
+                <div class="fee-form-actions">
+                    <label class="paid-checkbox">
+                        <input type="checkbox" id="feePaidCheckbox">
+                        Already paid
+                    </label>
+                    <div class="fee-form-buttons">
+                        <button type="button" id="cancelAddFeeBtn" class="btn-secondary">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Fee Record</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="fee-table-header">
+                <span>Athlete</span>
+                <span>Month</span>
+                <span>Amount</span>
+                <span>Due Date</span>
+                <span>Status</span>
+                <span></span>
+            </div>
+            <div id="feeList" class="fee-list"></div>
+        </div>
+
+    </div><!-- end .main-content -->
+
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/fees.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW failed:', err));
+        }
+    </script>
+</body>
+
+</html>

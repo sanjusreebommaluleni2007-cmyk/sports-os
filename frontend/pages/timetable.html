@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports OS - Timetable</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/timetable.css">
+</head>
+
+<body>
+    <div id="sidebar"></div>
+
+    <div class="main-content">
+        <header class="page-header">
+            <div>
+                <p class="page-meta" id="pageDate">SATURDAY · 20 JUNE</p>
+                <h1 class="page-title">Timetable</h1>
+                <p class="page-subtitle" id="pageSubtitle">Your weekly training schedule at a glance.</p>
+            </div>
+            <div class="page-context">Field Mode · Tablet ready</div>
+        </header>
+
+        <div class="card timetable-toolbar">
+            <div class="view-toggle">
+                <button class="view-toggle-btn active" data-view="today">Today</button>
+                <button class="view-toggle-btn" data-view="week">Week</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+                <div id="weekNavControls" style="display:none;align-items:center;gap:8px;">
+                    <button id="prevWeekBtn" class="btn-secondary" style="padding:6px 12px;">‹</button>
+                    <span id="weekRangeLabel"
+                        style="font-size:13px;font-weight:600;color:var(--color-dark);min-width:180px;text-align:center;"></span>
+                    <button id="nextWeekBtn" class="btn-secondary" style="padding:6px 12px;">›</button>
+                    <button id="jumpToTodayBtn" class="btn-secondary"
+                        style="padding:6px 12px;font-size:12px;">Today</button>
+                    <input type="date" id="weekDatePicker" class="form-control"
+                        style="width:160px;padding:6px 10px;font-size:13px;">
+                </div>
+                <button id="addSlotBtn" class="btn-primary" style="display:none;">+ Add Slot</button>
+            </div>
+        </div>
+
+        <!-- Add / Edit Slot form (head_coach / owner only) -->
+        <form id="slotForm" class="card slot-form" style="display:none;">
+            <h3 id="slotFormTitle">Add Timetable Slot</h3>
+            <div class="slot-form-grid">
+                <div class="form-group">
+                    <label class="filter-label">BATCH</label>
+                    <select id="slotBatch" class="form-control" required>
+                        <option value="">Select batch</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="filter-label">COACH</label>
+                    <select id="slotCoach" class="form-control" required>
+                        <option value="">Select coach</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="filter-label">DAY OF WEEK</label>
+                    <select id="slotDay" class="form-control" required>
+                        <option value="">Select day</option>
+                        <option>Monday</option>
+                        <option>Tuesday</option>
+                        <option>Wednesday</option>
+                        <option>Thursday</option>
+                        <option>Friday</option>
+                        <option>Saturday</option>
+                        <option>Sunday</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="filter-label">ACTIVITY TYPE</label>
+                    <input type="text" id="slotActivity" class="form-control" placeholder="e.g. Net Practice" required>
+                </div>
+                <div class="form-group">
+                    <label class="filter-label">START TIME</label>
+                    <input type="time" id="slotStart" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="filter-label">END TIME</label>
+                    <input type="time" id="slotEnd" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="filter-label">LOCATION</label>
+                    <input type="text" id="slotLocation" class="form-control" placeholder="e.g. Net 1 (Pace)">
+                </div>
+                <div class="form-group slot-form-notes">
+                    <label class="filter-label">NOTES</label>
+                    <input type="text" id="slotNotes" class="form-control" placeholder="Optional">
+                </div>
+            </div>
+            <div class="slot-form-buttons">
+                <button type="button" id="cancelSlotBtn" class="btn-secondary">Cancel</button>
+                <button type="submit" id="saveSlotBtn" class="btn-primary">Save Slot</button>
+            </div>
+        </form>
+
+        <!-- Today view -->
+        <div id="todayView" class="card">
+            <div class="card-header">
+                <h2 id="todayLabel">Today's Schedule</h2>
+            </div>
+            <div id="todayList" class="today-list"></div>
+        </div>
+
+        <!-- Week view -->
+        <!-- Week view -->
+        <div id="weekView" class="card" style="display:none;">
+            <div class="card-header">
+                <h2 id="weekViewTitle">This Week</h2>
+            </div>
+            <div id="weekGrid" class="week-grid"></div>
+        </div>
+    </div>
+
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/timetable.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW failed:', err));
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,359 @@
+/* ============================================
+   AUTH CONTAINER - TWO COLUMN LAYOUT
+   ============================================ */
+.auth-container {
+    display: flex;
+    height: 100vh;
+    background-color: var(--color-white);
+}
+
+/* LEFT PANEL - DARK BRANDING */
+.auth-left {
+    width: 40%;
+    background-color: var(--color-sidebar);
+    color: var(--color-white);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.logo-wrap {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 48px;
+}
+
+.logo-icon {
+    width: 44px;
+    height: 44px;
+    background-color: var(--color-accent);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.logo-subtitle {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.auth-left h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.auth-left-subtext {
+    font-size: 14px;
+    color: #9CA3AF;
+    margin-bottom: 32px;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-list li {
+    font-size: 14px;
+    color: #D1D5DB;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.feature-check {
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-accent);
+    color: var(--color-sidebar);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* RIGHT PANEL - WHITE FORM AREA */
+.auth-right {
+    width: 60%;
+    background-color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    overflow-y: auto;
+}
+
+.auth-form-wrap {
+    width: 100%;
+    max-width: 480px;
+}
+
+.auth-form-wrap h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 8px;
+}
+
+.form-subtext {
+    font-size: 14px;
+    color: var(--color-muted);
+    margin-bottom: 32px;
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-dark);
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-family: var(--font-main);
+    transition: all 0.2s ease;
+    background-color: var(--color-white);
+    color: var(--color-dark);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.1);
+}
+
+.form-control:disabled {
+    background-color: #F9FAFB;
+    color: #9CA3AF;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.show-password-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    color: var(--color-muted);
+}
+
+.show-password-btn:hover {
+    color: var(--color-dark);
+}
+
+.conditional-field {
+    display: none;
+}
+
+/* ============================================
+   ROLE SELECTOR GRID
+   ============================================ */
+.role-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.role-card {
+    padding: 20px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+    background-color: var(--color-white);
+}
+
+.role-card:hover {
+    border-color: var(--color-accent);
+    background-color: #FFFBEB;
+}
+
+.role-card.active {
+    border-color: var(--color-accent);
+    background-color: #FFFBEB;
+}
+
+.role-icon {
+    display: block;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.role-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-dark);
+}
+
+/* ============================================
+   FORM ROW (REMEMBER ME + FORGOT PASSWORD)
+   ============================================ */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 12px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--color-dark);
+    font-weight: 500;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--color-accent);
+}
+
+.forgot-password-link {
+    font-size: 13px;
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.forgot-password-link:hover {
+    color: var(--color-accent-hover);
+}
+
+/* ============================================
+   ERROR MESSAGE
+   ============================================ */
+.error-message {
+    display: block;
+    font-size: 13px;
+    color: var(--color-danger);
+    margin-bottom: 16px;
+    padding: 12px;
+    background-color: #FEE2E2;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--color-danger);
+}
+
+.error-message:empty {
+    display: none;
+}
+
+/* ============================================
+   ROLE HINT
+   ============================================ */
+.role-hint {
+    font-size: 13px;
+    color: var(--color-muted);
+    background-color: #F9FAFB;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* ============================================
+   AUTH LINK BOTTOM
+   ============================================ */
+.auth-link-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--color-muted);
+}
+
+.auth-link-bottom a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.auth-link-bottom a:hover {
+    color: var(--color-accent-hover);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .auth-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .auth-left,
+    .auth-right {
+        width: 100%;
+        padding: 32px;
+    }
+
+    .auth-left {
+        min-height: auto;
+        padding-top: 32px;
+        padding-bottom: 24px;
+    }
+
+    .auth-left h1 {
+        font-size: 24px;
+    }
+
+    .logo-wrap {
+        margin-bottom: 24px;
+    }
+
+    .role-grid {
+        grid-template-columns: 1fr 1fr;
+        margin-bottom: 24px;
+    }
+
+    .auth-form-wrap h2 {
+        font-size: 24px;
+    }
+}

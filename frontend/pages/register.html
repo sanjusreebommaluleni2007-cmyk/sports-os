@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Sports OS</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-left">
+            <div class="logo-wrap">
+                <div class="logo-icon">🏆</div>
+                <div>
+                    <div class="logo-text">Sports OS</div>
+                    <div class="logo-subtitle">SPORTS ACADEMY</div>
+                </div>
+            </div>
+            <h1>Manage your academy. On the field.</h1>
+            <p class="auth-left-subtext">Everything a sports coach needs.</p>
+            <ul class="feature-list">
+                <li><span class="feature-check">✓</span> Real-time attendance tracking</li>
+                <li><span class="feature-check">✓</span> Voice session logging</li>
+                <li><span class="feature-check">✓</span> Performance benchmarks & charts</li>
+            </ul>
+        </div>
+
+        <div class="auth-right">
+            <div class="auth-form-wrap">
+                <h2>Create your account</h2>
+                <p class="form-subtext">Join Sports OS — Built for coaches, by coaches</p>
+
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" class="form-control" required>
+                            <button type="button" class="show-password-btn"
+                                onclick="togglePassword('password')">👁</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+                                required>
+                            <button type="button" class="show-password-btn"
+                                onclick="togglePassword('confirmPassword')">👁</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role">Select Your Role</label>
+                        <select id="role" name="role" class="form-control" required onchange="handleRoleChange()">
+                            <option value="">-- Select your role --</option>
+                            <option value="owner">Owner</option>
+                            <option value="head_coach">Head Coach</option>
+                            <option value="coach">Coach</option>
+                            <option value="athlete">Athlete</option>
+                        </select>
+                    </div>
+
+                    <!-- Sport — shown for all roles except owner (owner picks in academyName section) -->
+                    <div class="form-group" id="sportField" style="display:none;">
+                        <label for="sport">Sport</label>
+                        <select id="sport" name="sport" class="form-control">
+                            <option value="">-- Select sport --</option>
+                            <option value="cricket">🏏 Cricket</option>
+                            <option value="tennis">🎾 Tennis</option>
+                            <option value="kabaddi">🤼 Kabaddi</option>
+                        </select>
+                    </div>
+
+                    <!-- Academy Name (Owner / Head Coach) -->
+                    <div class="form-group conditional-field" id="academyNameField" style="display:none;">
+                        <label for="academyName">Academy Name</label>
+                        <input type="text" id="academyName" name="academyName" class="form-control">
+                    </div>
+
+                    <!-- Batch Assigned (Coach) -->
+                    <div class="form-group conditional-field" id="batchAssignedField" style="display:none;">
+                        <label for="batchAssigned">Batch Assigned</label>
+                        <input type="text" id="batchAssigned" name="batchAssigned" class="form-control">
+                    </div>
+
+                    <!-- Batch (Athlete) -->
+                    <div class="form-group conditional-field" id="batchAthleteField" style="display:none;">
+                        <label for="batchAthlete">Batch</label>
+                        <input type="text" id="batchAthlete" name="batchAthlete" class="form-control">
+                    </div>
+
+                    <!-- Specialization (Coach / Head Coach) -->
+                    <div class="form-group conditional-field" id="specializationField" style="display:none;">
+                        <label for="specialization">Specialization</label>
+                        <select id="specialization" name="specialization" class="form-control">
+                            <option value="">-- Select specialization --</option>
+                            <option value="Top Order">Top Order</option>
+                            <option value="All-rounder">All-rounder</option>
+                            <option value="Middle Order">Middle Order</option>
+                            <option value="Wicket-keeper">Wicket-keeper</option>
+                            <option value="Pace">Pace</option>
+                            <option value="Spin">Spin</option>
+                        </select>
+                    </div>
+
+                    <div id="errorMessage" class="error-message"></div>
+
+                    <button type="submit" class="btn-primary" style="width:100%;margin-top:24px;">Create
+                        Account</button>
+                </form>
+
+                <div style="margin-top:16px;text-align:center;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                        <hr style="flex:1;border:none;border-top:1px solid #E5E7EB;">
+                        <span style="font-size:12px;color:#9CA3AF;">OR</span>
+                        <hr style="flex:1;border:none;border-top:1px solid #E5E7EB;">
+                    </div>
+                    <a id="googleBtn" href="#"
+                        style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border:1px solid #E5E7EB;border-radius:8px;background:#fff;font-size:14px;font-weight:500;color:#374151;text-decoration:none;">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"
+                            height="18">
+                        Continue with Google
+                    </a>
+                </div>
+
+                <div class="auth-link-bottom">
+                    Already have an account? <a href="login.html">Sign in →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = `${window.location.protocol}//${window.location.hostname}:5000/api/auth`;
+        document.getElementById('googleBtn').href = `${window.location.protocol}//${window.location.hostname}:5000/api/auth/google`;
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            field.type = field.type === 'password' ? 'text' : 'password';
+        }
+
+        function handleRoleChange() {
+            const role = document.getElementById('role').value;
+
+            // Hide all conditional fields
+            document.getElementById('academyNameField').style.display = 'none';
+            document.getElementById('batchAssignedField').style.display = 'none';
+            document.getElementById('batchAthleteField').style.display = 'none';
+            document.getElementById('specializationField').style.display = 'none';
+            document.getElementById('sportField').style.display = 'none';
+
+            if (role === 'owner') {
+                document.getElementById('academyNameField').style.display = 'block';
+                document.getElementById('sportField').style.display = 'block';
+            } else if (role === 'head_coach') {
+                document.getElementById('academyNameField').style.display = 'block';
+                document.getElementById('sportField').style.display = 'block';
+                document.getElementById('specializationField').style.display = 'block';
+            } else if (role === 'coach') {
+                document.getElementById('sportField').style.display = 'block';
+                document.getElementById('batchAssignedField').style.display = 'block';
+                document.getElementById('specializationField').style.display = 'block';
+            } else if (role === 'athlete') {
+                document.getElementById('sportField').style.display = 'block';
+                document.getElementById('batchAthleteField').style.display = 'block';
+            }
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = '';
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Passwords do not match';
+                return;
+            }
+
+            const role = document.getElementById('role').value;
+            if (!role) {
+                errorMessage.textContent = 'Please select a role';
+                return;
+            }
+
+            const sport = document.getElementById('sport').value;
+            if (!sport) {
+                errorMessage.textContent = 'Please select a sport';
+                return;
+            }
+
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                password,
+                role,
+                sport,
+                academyName: document.getElementById('academyName').value || undefined,
+                batchAssigned: document.getElementById('batchAssigned').value || undefined,
+                specialization: document.getElementById('specialization').value || undefined,
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Save user with sport included
+                    const userData = {
+                        ...(data.user || {}),
+                        token: data.token,
+                        sport: data.user?.sport || sport,
+                    };
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(userData));
+                    window.location.href = 'login.html';
+                } else {
+                    errorMessage.textContent = data.message || 'Registration failed';
+                }
+            } catch (error) {
+                errorMessage.textContent = 'An error occurred. Please try again.';
+                console.error('Error:', error);
+            }
+        });
+
+        // Handle Google OAuth callback
+        const urlParams = new URLSearchParams(window.location.search);
+        const googleAuth = urlParams.get('googleAuth');
+        const googleError = urlParams.get('error');
+
+        if (googleError) {
+            document.getElementById('errorMessage').textContent = 'Google sign-up failed. Please try again.';
+        }
+
+        if (googleAuth) {
+            const params = new URLSearchParams(decodeURIComponent(googleAuth));
+            const userData = {
+                token: params.get('token'),
+                id: params.get('id'),
+                name: params.get('name'),
+                email: params.get('email'),
+                role: params.get('role'),
+                sport: params.get('sport'),
+            };
+            localStorage.setItem('user', JSON.stringify(userData));
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW failed:', err));
+        }
+    </script>
+</body>
+
+</html>

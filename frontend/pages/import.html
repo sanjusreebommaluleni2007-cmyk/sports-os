@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports OS - Bulk Import</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/import.css">
+</head>
+
+<body>
+    <div id="sidebar"></div>
+
+    <div class="main-content">
+        <header class="page-header">
+            <div>
+                <p class="page-meta">OWNER · ADMIN TOOLS</p>
+                <h1 class="page-title">Bulk Import</h1>
+                <p class="page-subtitle">Upload an Excel sheet to create or update athletes, coaches, and batches.</p>
+            </div>
+        </header>
+
+        <!-- ── Step 1: Upload ── -->
+        <section id="step-upload">
+            <div class="card import-card">
+                <h3 class="section-title">Step 1 — Upload Excel File</h3>
+
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-icon">📂</div>
+                    <p class="drop-label">Drag & drop your <strong>.xlsx</strong> file here</p>
+                    <p class="drop-sub">or</p>
+                    <label class="btn-primary" for="fileInput" style="cursor:pointer;">Browse File</label>
+                    <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none;">
+                    <p class="drop-hint">Supported: .xlsx, .xls · Max 10 MB</p>
+                </div>
+
+                <div id="fileInfo" class="file-info hidden">
+                    <span class="file-icon">📄</span>
+                    <span id="fileName" class="file-name"></span>
+                    <span id="fileSize" class="file-size"></span>
+                    <button class="btn-ghost" id="clearFile">✕ Remove</button>
+                </div>
+            </div>
+
+            <!-- Format guide -->
+            <div class="card format-card">
+                <h3 class="section-title">Expected Column Format</h3>
+                <p class="format-note">First row must be a header row with these exact column names (case-insensitive):
+                </p>
+                <div class="table-wrap">
+                    <table class="format-table">
+                        <thead>
+                            <tr>
+                                <th>Column</th>
+                                <th>Required</th>
+                                <th>Values</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>type</code></td>
+                                <td><span class="badge-req">Required</span></td>
+                                <td>athlete · coach · head_coach</td>
+                                <td>athlete</td>
+                            </tr>
+                            <tr>
+                                <td><code>name</code></td>
+                                <td><span class="badge-req">Required</span></td>
+                                <td>Full name</td>
+                                <td>Rohit Sharma</td>
+                            </tr>
+                            <tr>
+                                <td><code>email</code></td>
+                                <td><span class="badge-req">Required</span></td>
+                                <td>Unique identifier</td>
+                                <td>rohit@academy.com</td>
+                            </tr>
+                            <tr>
+                                <td><code>password</code></td>
+                                <td><span class="badge-req">Required</span></td>
+                                <td>Plain text (will be hashed)</td>
+                                <td>Academy@2024</td>
+                            </tr>
+                            <tr>
+                                <td><code>batch</code></td>
+                                <td><span class="badge-opt">Optional</span></td>
+                                <td>Batch name — created if not exists</td>
+                                <td>U-16 Elite</td>
+                            </tr>
+                            <tr>
+                                <td><code>phone</code></td>
+                                <td><span class="badge-opt">Optional</span></td>
+                                <td>10-digit number</td>
+                                <td>9876543210</td>
+                            </tr>
+                            <tr>
+                                <td><code>dob</code></td>
+                                <td><span class="badge-opt">Optional</span></td>
+                                <td>DD/MM/YYYY</td>
+                                <td>15/06/2008</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="format-note" style="margin-top:12px;">
+                    ⚡ <strong>Duplicate emails</strong> will update the existing user's name, role, batch, and
+                    password.<br>
+                    🗂️ <strong>Batches</strong> are auto-created if the batch name doesn't exist yet.
+                </p>
+
+                <div style="margin-top:16px;">
+                    <a class="btn-secondary" id="downloadTemplate" href="#">⬇ Download Template</a>
+                </div>
+            </div>
+
+            <div style="margin-top:8px;">
+                <button class="btn-primary" id="previewBtn" disabled>Preview Import →</button>
+            </div>
+        </section>
+
+        <!-- ── Step 2: Preview ── -->
+        <section id="step-preview" class="hidden">
+            <div class="card">
+                <div class="preview-header">
+                    <div>
+                        <h3 class="section-title" style="margin:0;">Step 2 — Preview</h3>
+                        <p class="card-subtext" id="previewMeta"></p>
+                    </div>
+                    <button class="btn-ghost" id="backToUpload">← Change File</button>
+                </div>
+
+                <div class="table-wrap" style="margin-top:16px;">
+                    <table class="preview-table" id="previewTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Batch</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="previewBody"></tbody>
+                    </table>
+                </div>
+
+                <div id="previewErrors" class="error-list hidden"></div>
+            </div>
+
+            <div style="margin-top:16px;display:flex;gap:12px;align-items:center;">
+                <button class="btn-primary" id="confirmImport">✅ Confirm & Import</button>
+                <button class="btn-secondary" id="cancelImport">Cancel</button>
+                <span id="importSpinner" class="spinner hidden"></span>
+            </div>
+        </section>
+
+        <!-- ── Step 3: Result ── -->
+        <section id="step-result" class="hidden">
+            <div class="card result-card">
+                <div class="result-icon" id="resultIcon">✅</div>
+                <h2 id="resultTitle" class="result-title">Import Complete</h2>
+                <p id="resultSubtitle" class="card-subtext"></p>
+
+                <div class="result-stats" id="resultStats"></div>
+
+                <div id="resultErrors" class="error-list hidden" style="margin-top:16px;"></div>
+
+                <div style="margin-top:24px;display:flex;gap:12px;">
+                    <button class="btn-primary" id="importAnother">Import Another File</button>
+                    <a class="btn-secondary" href="batches.html">View Batches →</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/import.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW failed:', err));
+        }
+    </script>
+</body>
+
+</html>

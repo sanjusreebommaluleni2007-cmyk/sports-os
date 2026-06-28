@@ -1,0 +1,140 @@
+.chart-controls {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.zoom-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1.5px solid #E5E7EB;
+    background: white;
+    color: #111827;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zoom-btn:hover {
+    background: #F9FAFB;
+    border-color: #D1D5DB;
+}
+
+.zoom-level {
+    font-size: 12px;
+    color: #6B7280;
+    min-width: 40px;
+    text-align: center;
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.chart-wrap {
+    min-height: 280px;
+}
+
+@media (max-width: 900px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.view-toggle {
+    display: flex;
+    gap: 4px;
+    background: #F3F4F6;
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.toggle-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #6B7280;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.toggle-btn.active {
+    background: white;
+    color: #111827;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.view-toggle {
+    display: flex;
+    gap: 4px;
+    background: #F3F4F6;
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.toggle-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #6B7280;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.toggle-btn.active {
+    background: white;
+    color: #111827;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* Push the benchmark label so it doesn't overlap the stats row */
+.benchmark-label {
+    position: absolute;
+    right: 8px;
+    font-size: 11px;
+    color: #DC2626;
+    font-weight: 500;
+    bottom: 8px;
+    /* change from top:38% to bottom:8px */
+    top: auto;
+}
+
+/* Add a clear gap between chart card and stats row */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+    /* increase from 4px to 24px */
+}
+
+.chart-legend {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Attendance · Sports OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+</head>
+
+<body>
+    <div id="sidebar"></div>
+    <div class="main-content">
+        <p id="pageDate" class="page-date"></p>
+        <h1 class="page-title">My Attendance</h1>
+        <p style="color:#6B7280;margin-bottom:28px">Your attendance record for this month.</p>
+
+        <!-- Summary Cards -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
+            <div class="card" style="text-align:center;padding:20px">
+                <div style="font-size:11px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:8px">
+                    Total Sessions</div>
+                <div style="font-size:32px;font-weight:800">18</div>
+            </div>
+            <div class="card" style="text-align:center;padding:20px">
+                <div style="font-size:11px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:8px">
+                    Present</div>
+                <div style="font-size:32px;font-weight:800;color:#16A34A">16</div>
+            </div>
+            <div class="card" style="text-align:center;padding:20px">
+                <div style="font-size:11px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:8px">
+                    Absent</div>
+                <div style="font-size:32px;font-weight:800;color:#DC2626">2</div>
+            </div>
+            <div class="card" style="text-align:center;padding:20px">
+                <div style="font-size:11px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:8px">
+                    Attendance %</div>
+                <div style="font-size:32px;font-weight:800;color:#16A34A">92%</div>
+            </div>
+        </div>
+
+        <!-- Attendance Record -->
+        <div class="card">
+            <h3 style="font-size:16px;font-weight:700;margin-bottom:20px">
+                📅 June 2026 — Attendance Record</h3>
+            <div id="attendanceList"></div>
+        </div>
+    </div>
+
+    <script src="../js/sidebar.js"></script>
+    <script>
+        const records = [
+            { date: '17 Jun', day: 'Wednesday', session: 'Net Practice', status: 'present' },
+            { date: '16 Jun', day: 'Tuesday', session: 'Batting Drills', status: 'present' },
+            { date: '15 Jun', day: 'Monday', session: 'Match Simulation', status: 'present' },
+            { date: '14 Jun', day: 'Sunday', session: 'Rest Day', status: 'present' },
+            { date: '13 Jun', day: 'Saturday', session: 'Fielding Drills', status: 'absent' },
+            { date: '12 Jun', day: 'Friday', session: 'Net Practice', status: 'present' },
+            { date: '11 Jun', day: 'Thursday', session: 'Fitness Training', status: 'present' },
+            { date: '10 Jun', day: 'Wednesday', session: 'Target Bowling', status: 'absent' },
+            { date: '09 Jun', day: 'Tuesday', session: 'Throw-downs', status: 'present' },
+            { date: '08 Jun', day: 'Monday', session: 'Net Practice', status: 'present' },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) { window.location.href = 'login.html'; return; }
+
+            const now = new Date();
+            const weekday = now.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+            const day = now.getDate();
+            const month = now.toLocaleDateString('en-US', { month: 'long' }).toUpperCase();
+            document.getElementById('pageDate').textContent = weekday + ' · ' + day + ' ' + month;
+
+            const list = document.getElementById('attendanceList');
+            list.innerHTML = records.map(function (r) {
+                const isPresent = r.status === 'present';
+                const badgeBg = isPresent ? '#DCFCE7' : '#FEE2E2';
+                const badgeColor = isPresent ? '#16A34A' : '#DC2626';
+                const badgeText = isPresent ? '✓ Present' : '✗ Absent';
+                const dateParts = r.date.split(' ');
+
+                return '<div style="display:flex;align-items:center;justify-content:space-between;' +
+                    'padding:14px 0;border-bottom:1px solid #F3F4F6">' +
+                    '<div style="display:flex;align-items:center;gap:16px">' +
+                    '<div style="text-align:center;min-width:48px">' +
+                    '<div style="font-size:18px;font-weight:700">' + dateParts[0] + '</div>' +
+                    '<div style="font-size:11px;color:#6B7280">' + dateParts[1] + '</div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div style="font-weight:600">' + r.session + '</div>' +
+                    '<div style="font-size:12px;color:#6B7280">' + r.day + '</div>' +
+                    '</div></div>' +
+                    '<span style="padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700;' +
+                    'background:' + badgeBg + ';color:' + badgeColor + '">' +
+                    badgeText + '</span></div>';
+            }).join('');
+        });
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW failed:', err));
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,375 @@
+/* ── Import page styles ─────────────────────────────────────────────────────── */
+
+.hidden {
+    display: none !important;
+}
+
+/* ── Drop zone ── */
+.import-card {
+    margin-bottom: 20px;
+}
+
+.drop-zone {
+    border: 2px dashed #D1D5DB;
+    border-radius: 12px;
+    padding: 48px 24px;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+    background: #FAFAFA;
+}
+
+.drop-zone.drag-over {
+    border-color: #F5C518;
+    background: #FFFBEB;
+}
+
+.drop-zone.has-file {
+    border-color: #10B981;
+    background: #F0FDF4;
+}
+
+.drop-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.drop-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 6px;
+}
+
+.drop-sub {
+    font-size: 13px;
+    color: #9CA3AF;
+    margin: 0 0 14px;
+}
+
+.drop-hint {
+    font-size: 12px;
+    color: #9CA3AF;
+    margin: 14px 0 0;
+}
+
+/* ── File info bar ── */
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    border-radius: 8px;
+}
+
+.file-icon {
+    font-size: 20px;
+}
+
+.file-name {
+    flex: 1;
+    font-weight: 600;
+    font-size: 14px;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-size {
+    font-size: 13px;
+    color: #6B7280;
+    white-space: nowrap;
+}
+
+/* ── Section title ── */
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 16px;
+}
+
+/* ── Format guide table ── */
+.format-card {
+    margin-bottom: 20px;
+}
+
+.format-note {
+    font-size: 13px;
+    color: #6B7280;
+    margin: 0 0 14px;
+    line-height: 1.6;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+}
+
+.format-table,
+.preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.format-table th,
+.preview-table th {
+    background: #F9FAFB;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 1px solid #E5E7EB;
+    white-space: nowrap;
+}
+
+.format-table td,
+.preview-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #F3F4F6;
+    color: #374151;
+    vertical-align: middle;
+}
+
+.format-table tr:last-child td,
+.preview-table tr:last-child td {
+    border-bottom: none;
+}
+
+.preview-table tr.row-error td {
+    background: #FEF2F2;
+}
+
+.preview-table .email-cell {
+    font-family: monospace;
+    font-size: 12px;
+    color: #6B7280;
+}
+
+code {
+    font-family: monospace;
+    background: #F3F4F6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* ── Badges ── */
+.badge-req {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.badge-opt {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: #F3F4F6;
+    color: #6B7280;
+}
+
+/* ── Type badges ── */
+.type-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.type-athlete {
+    background: #DBEAFE;
+    color: #1E40AF;
+}
+
+.type-coach {
+    background: #D1FAE5;
+    color: #065F46;
+}
+
+.type-head_coach {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.type-invalid {
+    background: #FEE2E2;
+    color: #991B1B;
+}
+
+/* ── Status badges ── */
+.status-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.status-badge.success {
+    background: #D1FAE5;
+    color: #065F46;
+}
+
+.status-badge.error {
+    background: #FEE2E2;
+    color: #991B1B;
+}
+
+/* ── Preview header ── */
+.preview-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* ── Error list ── */
+.error-list {
+    margin-top: 14px;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #7F1D1D;
+}
+
+.error-title {
+    font-weight: 600;
+    margin: 0 0 8px;
+}
+
+.error-list ul {
+    margin: 0;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* ── Spinner ── */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #E5E7EB;
+    border-top-color: #F5C518;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── Result card ── */
+.result-card {
+    text-align: center;
+    padding: 40px 32px;
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+.result-icon {
+    font-size: 52px;
+    margin-bottom: 12px;
+}
+
+.result-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: #111827;
+}
+
+/* ── Result stats ── */
+.result-stats {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+}
+
+.stat-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 24px;
+    border-radius: 12px;
+    min-width: 90px;
+}
+
+.stat-pill.success {
+    background: #D1FAE5;
+}
+
+.stat-pill.update {
+    background: #DBEAFE;
+}
+
+.stat-pill.skip {
+    background: #F3F4F6;
+}
+
+.stat-pill.batch {
+    background: #FEF3C7;
+}
+
+.stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1;
+}
+
+.stat-lbl {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6B7280;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ── Ghost button ── */
+.btn-ghost {
+    background: none;
+    border: none;
+    color: #6B7280;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+
+.btn-ghost:hover {
+    background: #F3F4F6;
+    color: #111827;
+}
+
+/* ── Text muted ── */
+.text-muted {
+    color: #9CA3AF;
+}
