@@ -1,4 +1,4 @@
-const API_BASE_URL = `${window.location.protocol}//${window.location.hostname}:5000/api`;
+const API_BASE_URL = 'https://sports-os-production.up.railway.app/api';
 
 const ATTACHMENTS = {
     mediaRecorder: null,

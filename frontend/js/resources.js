@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://sports-os-production.up.railway.app/api';
 
 function getUser() {
     try { return JSON.parse(localStorage.getItem('user')) || null; }

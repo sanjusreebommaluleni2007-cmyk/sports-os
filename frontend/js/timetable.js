@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://sports-os-production.up.railway.app/api';
 
 function getToken() {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -132,7 +132,7 @@ function updateWeekNavUI() {
     if (title) {
         title.textContent = timetableState.weekOffset === 0 ? 'This Week' :
             timetableState.weekOffset === -1 ? 'Last Week' :
-            timetableState.weekOffset === 1 ? 'Next Week' : 'Week View';
+                timetableState.weekOffset === 1 ? 'Next Week' : 'Week View';
     }
 }
 

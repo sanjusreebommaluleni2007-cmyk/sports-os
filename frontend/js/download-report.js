@@ -34,8 +34,8 @@
                 const isReal = realMetrics.includes(metric);
                 // ← THIS is the fix: real metrics use /real, mock use base endpoint
                 const url = isReal
-                    ? `http://localhost:5000/api/performance/real?athleteId=${athleteId}&metric=${encodeURIComponent(metric)}&months=6`
-                    : `http://localhost:5000/api/performance?athleteId=${athleteId}&metric=${encodeURIComponent(metric)}`;
+                    ? `https://sports-os-production.up.railway.app/api/performance/real?athleteId=${athleteId}&metric=${encodeURIComponent(metric)}&months=6`
+                    : `https://sports-os-production.up.railway.app/api/performance?athleteId=${athleteId}&metric=${encodeURIComponent(metric)}`;
                 try {
                     const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
                     const data = await res.json();

@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://sports-os-production.up.railway.app/api';
 
 function getToken() {
     try {
@@ -98,7 +98,7 @@ let editAthleteId = null;
 function openAddAthlete() {
     editAthleteId = null;
     document.getElementById('athleteModalTitle').textContent = 'Add Athlete';
-    ['a_name','a_email','a_password','a_phone','a_specialization','a_dob','a_batch']
+    ['a_name', 'a_email', 'a_password', 'a_phone', 'a_specialization', 'a_dob', 'a_batch']
         .forEach(id => document.getElementById(id).value = '');
     document.getElementById('a_password').placeholder = 'Min 6 characters';
     document.getElementById('athleteModal').classList.add('open');
@@ -221,7 +221,7 @@ let editCoachId = null;
 function openAddCoach() {
     editCoachId = null;
     document.getElementById('coachModalTitle').textContent = 'Add Coach';
-    ['c_name','c_email','c_password','c_specialization','c_phone']
+    ['c_name', 'c_email', 'c_password', 'c_specialization', 'c_phone']
         .forEach(id => document.getElementById(id).value = '');
     document.getElementById('c_role').value = 'coach';
     document.getElementById('c_password').placeholder = 'Min 6 characters';
