@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSidebar();
 
     const sidebarEl = document.getElementById('sidebar');
-    if (!sidebarEl) return; // nothing to do if sidebar doesn't exist on this page
+    if (!sidebarEl) return;
 
     // ── 2. Create hamburger button ────────────────────────────────────────────
     const hamburgerBtn = document.createElement('button');
@@ -184,12 +184,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── 5. Single open/close state ────────────────────────────────────────────
     let sidebarOpen = false;
+    let isDesktopMode = localStorage.getItem('desktopMode') === 'true';
 
     function openSidebar() {
         sidebarOpen = true;
         sidebarEl.style.transform = 'translateX(0)';
         overlay.style.display = 'block';
-        hamburgerBtn.innerHTML = '✕';   // becomes a close button
+        hamburgerBtn.innerHTML = '✕';
         hamburgerBtn.setAttribute('aria-label', 'Close menu');
     }
 
@@ -201,19 +202,14 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburgerBtn.setAttribute('aria-label', 'Open menu');
     }
 
-    // ── 6. Hamburger: single listener, toggle open/closed ─────────────────────
+    // ── 6. Hamburger toggle ───────────────────────────────────────────────────
     hamburgerBtn.addEventListener('click', () => {
-        if (sidebarOpen) {
-            closeSidebar();
-        } else {
-            openSidebar();
-        }
+        if (sidebarOpen) closeSidebar();
+        else openSidebar();
     });
 
-    // Tapping the overlay closes the sidebar
     overlay.addEventListener('click', closeSidebar);
 
-    // Tapping any nav link closes the sidebar (good for SPA-style navigation)
     sidebarEl.addEventListener('click', (e) => {
         if (e.target.closest('.nav-link') && window.innerWidth <= 1024) {
             closeSidebar();
@@ -221,58 +217,61 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ── 7. Desktop-mode toggle ────────────────────────────────────────────────
-    let isDesktop = localStorage.getItem('desktopMode') === 'true';
-
+    // Desktop mode = sidebar permanently visible, no hamburger
+    // Mobile mode  = sidebar hidden, hamburger shown
     function applyDesktopMode(desktop) {
-        let meta = document.querySelector('meta[name="viewport"]');
-        if (!meta) {
-            meta = document.createElement('meta');
-            meta.name = 'viewport';
-            document.head.prepend(meta);
-        }
+        const mainContent = document.querySelector('.main-content');
+
         if (desktop) {
-            meta.setAttribute('content', 'width=1024, initial-scale=0.5');
+            // Show sidebar permanently like a desktop
+            sidebarEl.style.transform = 'translateX(0)';
+            sidebarEl.style.zIndex = '100';
+            if (mainContent) mainContent.style.marginLeft = '250px';
+            hamburgerBtn.style.display = 'none';
+            overlay.style.display = 'none';
             desktopBtn.innerHTML = '📱';
             desktopBtn.title = 'Switch to Mobile Mode';
+            sidebarOpen = false;
         } else {
-            meta.setAttribute('content', 'width=device-width, initial-scale=1.0');
+            // Back to mobile mode
+            if (mainContent) mainContent.style.marginLeft = '0';
             desktopBtn.innerHTML = '🖥️';
             desktopBtn.title = 'Switch to Desktop Mode';
+            forceSidebarLayout();
         }
     }
 
     desktopBtn.addEventListener('click', () => {
-        isDesktop = !isDesktop;
-        localStorage.setItem('desktopMode', String(isDesktop));
-        applyDesktopMode(isDesktop);
-        forceSidebarLayout(); // re-evaluate layout after viewport change
+        isDesktopMode = !isDesktopMode;
+        localStorage.setItem('desktopMode', String(isDesktopMode));
+        applyDesktopMode(isDesktopMode);
     });
 
-    // ── 8. Layout engine: uses innerWidth, never matchMedia ───────────────────
+    // ── 8. Layout engine ──────────────────────────────────────────────────────
     function forceSidebarLayout() {
-        const mobile = window.innerWidth <= 1024;
+        // Skip if desktop mode is on — applyDesktopMode handles it
+        if (isDesktopMode) return;
 
-        if (mobile) {
-            hamburgerBtn.style.display = 'flex';
-            desktopBtn.style.display = 'flex';
-            // Only force-close if we're switching from desktop → mobile
-            // Don't stomp on an already-open sidebar
-            if (!sidebarOpen) {
-                sidebarEl.style.transform = 'translateX(-250px)';
-            }
-        } else {
-            // Desktop: sidebar always visible, buttons hidden
-            hamburgerBtn.style.display = 'none';
-            desktopBtn.style.display = 'none';
-            sidebarEl.style.transform = 'translateX(0)';
-            overlay.style.display = 'none';
-            sidebarOpen = false;
+        hamburgerBtn.style.display = 'flex';
+        desktopBtn.style.display = 'flex';
+        if (!sidebarOpen) {
+            sidebarEl.style.transform = 'translateX(-250px)';
         }
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) mainContent.style.marginLeft = '0';
     }
 
-    // Apply viewport meta first, then layout
-    applyDesktopMode(isDesktop);
-    forceSidebarLayout();
+    // ── 9. Init ───────────────────────────────────────────────────────────────
+    // Always show desktop toggle button on mobile
+    desktopBtn.style.display = 'flex';
 
-    window.addEventListener('resize', forceSidebarLayout);
+    if (isDesktopMode) {
+        applyDesktopMode(true);
+    } else {
+        forceSidebarLayout();
+    }
+
+    window.addEventListener('resize', () => {
+        if (!isDesktopMode) forceSidebarLayout();
+    });
 });

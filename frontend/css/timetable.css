@@ -443,4 +443,15 @@
     .slot-time {
         min-width: unset;
     }
+
+    .btn-primary {
+        width: 100%;
+        text-align: center;
+        font-size: 13px;
+        padding: 10px 12px;
+    }
+
+    .timetable-toolbar {
+        position: relative;
+    }
 }

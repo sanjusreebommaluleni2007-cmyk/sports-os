@@ -72,7 +72,6 @@ exports.login = async (req, res) => {
             return res.status(401).json({ message: 'Incorrect role selected for this account.' });
         }
 
-        // For non-owner roles, find the owner to get the academy's sport
         let sport = user.sport || '';
         if (user.role !== 'owner') {
             const owner = await User.findOne({ role: 'owner', academyName: user.academyName });
@@ -209,6 +208,7 @@ exports.updateProfile = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 // GET /api/auth/google/callback
 exports.googleCallback = async (req, res) => {
     try {
@@ -233,6 +233,7 @@ exports.googleCallback = async (req, res) => {
         // Redirect to custom scheme so Android app catches it
         res.redirect(`sportsos://login?googleAuth=${encodeURIComponent(params.toString())}`);
     } catch (err) {
-        res.redirect('/pages/login.html?error=google_failed');
+        // ✅ Fixed: removed /pages/ prefix
+        res.redirect('/login.html?error=google_failed');
     }
 };
