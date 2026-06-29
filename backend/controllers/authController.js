@@ -238,7 +238,7 @@ exports.googleCallback = async (req, res) => {
             res.redirect(`sportsos://login?googleAuth=${encodeURIComponent(params.toString())}`);
         } else {
             // Browser lo direct redirect
-            res.redirect(`/dashboard.html?googleAuth=${encodeURIComponent(params.toString())}`);
+            res.redirect(`/login.html?googleAuth=${encodeURIComponent(params.toString())}`);
         }
     } catch (err) {
         res.redirect('/login.html?error=google_failed');
