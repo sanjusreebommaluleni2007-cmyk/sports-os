@@ -230,10 +230,17 @@ exports.googleCallback = async (req, res) => {
             sport,
         });
 
-        // Redirect to custom scheme so Android app catches it
-        res.redirect(`sportsos://login?googleAuth=${encodeURIComponent(params.toString())}`);
+        const userAgent = req.headers['user-agent'] || '';
+        const isAndroidAPK = userAgent.includes('wv') || userAgent.includes('SportsOS');
+
+        if (isAndroidAPK) {
+            // APK lo sportsos:// scheme use cheyyi
+            res.redirect(`sportsos://login?googleAuth=${encodeURIComponent(params.toString())}`);
+        } else {
+            // Browser lo direct redirect
+            res.redirect(`/dashboard.html?googleAuth=${encodeURIComponent(params.toString())}`);
+        }
     } catch (err) {
-        // ✅ Fixed: removed /pages/ prefix
         res.redirect('/login.html?error=google_failed');
     }
 };
