@@ -65,7 +65,7 @@
     color: var(--color-dark);
 }
 
-/* ── Toolbar: view toggle + add slot ─────────────────────────── */
+/* ── Toolbar ──────────────────────────────────────────────────── */
 
 .timetable-toolbar {
     display: flex;
@@ -123,7 +123,7 @@
     background: #F3F4F6;
 }
 
-/* ── Add / Edit slot form ─────────────────────────────────────── */
+/* ── Slot form ────────────────────────────────────────────────── */
 
 .slot-form {
     background: #F9FAFB;
@@ -347,6 +347,8 @@
     padding: 12px 0;
 }
 
+/* ── Tablet ───────────────────────────────────────────────────── */
+
 @media (max-width: 1100px) {
     .main-content {
         margin-left: 0;
@@ -362,22 +364,43 @@
     .slot-form-notes {
         grid-column: span 2;
     }
-
-    .week-grid {
-        grid-template-columns: repeat(4, 1fr);
-        overflow-x: auto;
-    }
 }
 
-@media (max-width: 1024px) {
+/* ── Mobile ───────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 70px 12px 20px 12px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
     .page-header {
         flex-direction: column;
         align-items: flex-start;
+        margin-bottom: 16px;
     }
 
     .timetable-toolbar {
         flex-direction: column;
         align-items: stretch;
+        gap: 10px;
+    }
+
+    .view-toggle {
+        width: 100%;
+    }
+
+    .view-toggle-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    .btn-primary {
+        width: 100%;
+        text-align: center;
     }
 
     .slot-form-grid {
@@ -388,12 +411,36 @@
         grid-column: span 1;
     }
 
+    /* Week view — horizontal swipe */
     .week-grid {
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 10px;
+        padding-bottom: 16px;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
     }
 
+    .week-day-col {
+        min-width: 160px;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+    }
+
+    /* Today view cards */
     .slot-card {
         flex-direction: column;
         align-items: flex-start;
+        gap: 10px;
+    }
+
+    .slot-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .slot-time {
+        min-width: unset;
     }
 }
