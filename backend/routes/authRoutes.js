@@ -11,7 +11,7 @@ router.post('/login', authController.login);
 
 // Google OAuth
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'], session: false, prompt: 'select_account' }));
-router.get('/google/callback', passport.authenticate('google', { session: false, failureRedirect: '/pages/login.html?error=google_failed' }), authController.googleCallback);
+router.get('/google/callback', passport.authenticate('google', { session: false, failureRedirect: '/login.html?error=google_failed' }), authController.googleCallback);
 
 // Protected routes
 router.get('/me', protect, authController.getMe);

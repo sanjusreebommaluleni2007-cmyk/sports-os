@@ -190,7 +190,7 @@ body.match-mode .main-content {
     z-index: 99;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     #sidebar {
         transform: translateX(-250px);
         display: flex !important;
@@ -244,7 +244,7 @@ body.match-mode .main-content {
     cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .desktop-toggle-btn {
         display: block !important;
     }

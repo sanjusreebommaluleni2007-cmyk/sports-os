@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Tapping any nav link closes the sidebar (good for SPA-style navigation)
     sidebarEl.addEventListener('click', (e) => {
-        if (e.target.closest('.nav-link') && window.innerWidth <= 768) {
+        if (e.target.closest('.nav-link') && window.innerWidth <= 1024) {
             closeSidebar();
         }
     });
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── 8. Layout engine: uses innerWidth, never matchMedia ───────────────────
     function forceSidebarLayout() {
-        const mobile = window.innerWidth <= 768;
+        const mobile = window.innerWidth <= 1024;
 
         if (mobile) {
             hamburgerBtn.style.display = 'flex';
