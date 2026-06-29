@@ -18,19 +18,6 @@
 
 <body>
     <div id="sidebar"></div>
-    <button id="forceHamburger"
-        style="position:fixed;top:12px;right:16px;z-index:9999;background:#F5C518;border:none;border-radius:8px;width:44px;height:44px;font-size:22px;">☰</button>
-    <script>
-        document.getElementById('forceHamburger').addEventListener('click', function () {
-            var sb = document.getElementById('sidebar');
-            if (sb.style.transform === 'translateX(0px)' || sb.style.transform === '') {
-                sb.style.transform = 'translateX(-250px)';
-            } else {
-                sb.style.transform = 'translateX(0px)';
-            }
-        });
-        document.getElementById('sidebar').style.transform = 'translateX(-250px)';
-    </script>
 
     <div class="main-content">
         <header class="page-header">
@@ -47,22 +34,22 @@
                 <button class="view-toggle-btn active" data-view="today">Today</button>
                 <button class="view-toggle-btn" data-view="week">Week</button>
             </div>
-            <div style="display:flex;align-items:center;gap:12px;">
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
                 <div id="weekNavControls" style="display:none;align-items:center;gap:8px;">
                     <button id="prevWeekBtn" class="btn-secondary" style="padding:6px 12px;">‹</button>
                     <span id="weekRangeLabel"
-                        style="font-size:13px;font-weight:600;color:var(--color-dark);min-width:180px;text-align:center;"></span>
+                        style="font-size:13px;font-weight:600;color:var(--color-dark);min-width:140px;text-align:center;"></span>
                     <button id="nextWeekBtn" class="btn-secondary" style="padding:6px 12px;">›</button>
                     <button id="jumpToTodayBtn" class="btn-secondary"
                         style="padding:6px 12px;font-size:12px;">Today</button>
                     <input type="date" id="weekDatePicker" class="form-control"
-                        style="width:160px;padding:6px 10px;font-size:13px;">
+                        style="width:140px;padding:6px 10px;font-size:13px;">
                 </div>
                 <button id="addSlotBtn" class="btn-primary" style="display:none;">+ Add Slot</button>
             </div>
         </div>
 
-        <!-- Add / Edit Slot form (head_coach / owner only) -->
+        <!-- Add / Edit Slot form -->
         <form id="slotForm" class="card slot-form" style="display:none;">
             <h3 id="slotFormTitle">Add Timetable Slot</h3>
             <div class="slot-form-grid">
@@ -126,7 +113,6 @@
             <div id="todayList" class="today-list"></div>
         </div>
 
-        <!-- Week view -->
         <!-- Week view -->
         <div id="weekView" class="card" style="display:none;">
             <div class="card-header">
